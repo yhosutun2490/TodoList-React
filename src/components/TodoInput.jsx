@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styled from 'styled-components';
 
 const StyledAddTodoContainer = styled.div`
@@ -70,16 +71,20 @@ const StyledAddTodoActionContainer = styled.div`
 const TodoInput = (props) => {
   // 讓使用者輸入資料，並監聽輸入欄位資料，onAddToDo (上傳todo資料儲存)
   // onChange = 上面傳的setInputValue
-  const {inputValue,onChange,onKeyPress,onAddToDo} = props 
+  const {inputValue,onChange,onKeyPress,onAddTodo} = props 
   
   return (
-    <StyledAddTodoContainer>
+    <StyledAddTodoContainer className={clsx('',{active:inputValue.length>0})}>
       <StyledLabelIcon className="icon" htmlFor="add-todo-input" />
       <StyledInputContainer>
-        <input id="add-todo-input" type="text" placeholder="新增工作" value={inputValue} onChange={(event) => {onChange?.(event.target.value)}}/>
+        <input id="add-todo-input" type="text" placeholder="新增工作" value={inputValue} onChange={(event) => {onChange?.(event.target.value)}} onKeyDown={(event)=> { 
+          if (event.key === 'Enter') {
+            onKeyPress?.()
+          }  
+        }}/>
       </StyledInputContainer>
-      <StyledAddTodoActionContainer>
-        <button className="btn-reset" onClick={()=>{onAddToDo?.()}}>新增</button>
+      <StyledAddTodoActionContainer className={ clsx ('',{active:inputValue.length>0})}>
+        <button className="btn-reset" onClick={() => onAddTodo?.()}>新增</button>
       </StyledAddTodoActionContainer>
     </StyledAddTodoContainer>
   );
