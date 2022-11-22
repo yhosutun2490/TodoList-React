@@ -71,7 +71,19 @@ const TodoPage = () => {
     })
     // 清空原本 inputValue 輸入值
     setInputValue('')
-
+   }
+   // toggle更動todo完成/未完成
+   function handleToggleDone (todoId) {
+    // 找到該筆todo id 並更新isDone屬性資料
+    setTodos(todos.map ( todo => {
+      if (todo.id === todoId) {
+        return {
+          ...todo,
+          isDone: !todo.isDone,
+        }
+      }
+      return todo
+    }))
    }
 
   return (
@@ -79,7 +91,7 @@ const TodoPage = () => {
       TodoPage
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
-      <TodoCollection todos={todos} />
+      <TodoCollection todos={todos} onToggleDone={handleToggleDone} />
       <Footer />
     </div>
   );

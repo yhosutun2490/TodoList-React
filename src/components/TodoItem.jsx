@@ -104,11 +104,11 @@ const StyledTaskItem = styled.div`
 const TodoItem = (props) => {
   // todo = 單筆代辦資料
   // 切換Done (onToggleDone),onSave(儲存編輯),onDelete(刪除), onChangeMode(編輯)
-  const {todo,onToggoleDone,onSave,onDelete,onChangeMode} = props
+  const {todo,onToggleDone,onSave,onDelete,onChangeMode} = props
   return (
     <StyledTaskItem className={clsx('',{done: todo.isDone})}>
       <div className="task-item-checked">
-        <span className="icon icon-checked" />
+        <span className="icon icon-checked" onClick={()=>{onToggleDone(todo.id)}}/>
       </div>
       <div className="task-item-body">
         <span className="task-item-body-text">{todo.title}</span>
