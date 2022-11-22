@@ -14,7 +14,7 @@ const StyledAddTodoContainer = styled.div`
   &.active {
     box-shadow: 0 17px 0 -16px var(--major);
   }
-`;
+`
 
 const StyledLabelIcon = styled.label`
   display: inline-flex;
@@ -67,7 +67,10 @@ const StyledAddTodoActionContainer = styled.div`
     }
   }
 `;
-const TodoInput = () => {
+const TodoInput = (props) => {
+  // 讓使用者輸入資料，並監聽輸入欄位資料，onAddToDo (上傳todo資料儲存)
+  const {inputValue,onChange,onKeyPress,onAddToDo} = props 
+
   return (
     <StyledAddTodoContainer>
       <StyledLabelIcon className="icon" htmlFor="add-todo-input" />

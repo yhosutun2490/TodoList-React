@@ -100,14 +100,17 @@ const StyledTaskItem = styled.div`
   }
 `;
 
-const TodoItem = () => {
+const TodoItem = (props) => {
+  // todo = 單筆代辦資料
+  // 切換Done (onToggleDone),onSave(儲存編輯),onDelete(刪除), onChangeMode(編輯)
+  const {todo,onToggoleDone,onSave,onDelete,onChangeMode} = props
   return (
     <StyledTaskItem>
       <div className="task-item-checked">
         <span className="icon icon-checked" />
       </div>
       <div className="task-item-body">
-        <span className="task-item-body-text">todo</span>
+        <span className="task-item-body-text">{todo.title}</span>
         <input className="task-item-body-input" />
       </div>
       <div className="task-item-action ">
