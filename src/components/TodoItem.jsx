@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import clsx from 'clsx'; // 引入className變換套件
 import {
   CheckActiveIcon,
   CheckCircleIcon,
@@ -105,7 +106,7 @@ const TodoItem = (props) => {
   // 切換Done (onToggleDone),onSave(儲存編輯),onDelete(刪除), onChangeMode(編輯)
   const {todo,onToggoleDone,onSave,onDelete,onChangeMode} = props
   return (
-    <StyledTaskItem>
+    <StyledTaskItem className={clsx('',{done: todo.isDone})}>
       <div className="task-item-checked">
         <span className="icon icon-checked" />
       </div>
