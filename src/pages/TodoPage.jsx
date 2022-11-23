@@ -132,7 +132,7 @@ const TodoPage = () => {
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
       <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave} onDelete={handleDelete}/>
-      <Footer />
+      <Footer todosLength={todos.length}/>
     </div>
   );
 };
