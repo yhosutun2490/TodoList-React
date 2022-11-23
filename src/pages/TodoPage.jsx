@@ -25,9 +25,7 @@ const dummyTodos = [
 ];
 
 const TodoPage = () => {
-  // 設置todo input 輸入狀態
   const [inputValue, setInputValue] = useState('')
-  // 設置所有todo task 狀態
   const [todos, setTodos] = useState(dummyTodos) 
   // input onChange handler
   function handleInput (value) {

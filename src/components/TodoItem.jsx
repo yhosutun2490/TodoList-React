@@ -80,7 +80,7 @@ const StyledTaskItem = styled.div`
 
   .task-item-action {
     .btn-destroy {
-      display: none;
+      display: block;
       font-size: 30px;
       transition: color 0.2s ease-out;
       font-weight: 300;
@@ -103,11 +103,9 @@ const StyledTaskItem = styled.div`
 `;
 
 const TodoItem = (props) => {
+  const {todo,onToggleDone,onSave,onDelete,onChangeMode} = props
   // 設定 ref 捕捉編輯時DOM元素value
   const editInputRef = useRef(null)
-  // todo = 單筆代辦資料
-  // 切換Done (onToggleDone),onSave(儲存編輯),onDelete(刪除), onChangeMode(編輯)
-  const {todo,onToggleDone,onSave,onDelete,onChangeMode} = props
   // 編輯中按下Enter/Esc
   function handleKeyDown (event,todoId) {
     // 按到Enter時
@@ -128,7 +126,7 @@ const TodoItem = (props) => {
         <input className="task-item-body-input" defaultValue={todo.title} ref={editInputRef} onKeyDown={(event)=>{handleKeyDown?.(event,todo.id)}}/>
       </div>
       <div className="task-item-action ">
-        <button className="btn-reset btn-destroy icon" onClick={onDelete?.(todo.id)}></button>
+        <button className="btn-reset btn-destroy icon" onClick={()=>onDelete?.(todo.id)}></button>
       </div>
     </StyledTaskItem>
   );
