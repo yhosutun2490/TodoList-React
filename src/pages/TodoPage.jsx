@@ -85,13 +85,33 @@ const TodoPage = () => {
       return todo
     }))
    }
+   // handleChangeMode function {id,isEdit} 解構傳入的參數
+   function handleChangeMode ({id,isEdit}) {
+    // 呼叫setTodos 更新該筆Todo isEdit屬性
+    setTodos((preTodos) => {
+      return preTodos.map (todo => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            isEdit
+          }
+        }
+        else {
+          return {
+            ...todo,
+            isEdit: false,
+          }
+        }
+      } )
+    })
+   }
 
   return (
     <div>
       TodoPage
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
-      <TodoCollection todos={todos} onToggleDone={handleToggleDone} />
+      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode}/>
       <Footer />
     </div>
   );

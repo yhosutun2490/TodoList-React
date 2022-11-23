@@ -7,7 +7,7 @@ const TodoCollection = (props) => {
     <div>
       TodoCollection
       {todos.map (todo =>{
-        return <TodoItem key={todo.id} todo={todo} onToggleDone={onToggleDone}/>
+        return <TodoItem key={todo.id} todo={todo} onToggleDone={onToggleDone} onChangeMode={onChangeMode}/>
       } )} 
     </div>
   );
