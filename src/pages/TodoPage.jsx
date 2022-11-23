@@ -105,13 +105,30 @@ const TodoPage = () => {
       } )
     })
    }
+   // 編輯完Save
+   function handleSave ({id,title}) {
+    setTodos ((preTodos)=> {
+      return preTodos.map (todo=> {
+        if (todo.id ===id) {
+          return {
+            ...todo,
+            title,
+            isEdit: false,
+          }
+        }
+        else {
+          return todo
+        }
+      })
+    })
+   }
 
   return (
     <div>
       TodoPage
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
-      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode}/>
+      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave}/>
       <Footer />
     </div>
   );
