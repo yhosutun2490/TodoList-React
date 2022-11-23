@@ -2,10 +2,10 @@ import {
   AuthContainer,
   AuthInputContainer,
   AuthButton,
-  AuthLinkText,
-} from 'components/common/auth.styled';
-import { ACLogoIcon } from 'assets/images';
-import { AuthInput } from 'components';
+  AuthLinkText
+} from 'components/common/auth.styled'
+import { ACLogoIcon } from 'assets/images'
+import { AuthInput } from 'components'
 
 const LoginPage = () => {
   return (
@@ -25,7 +25,7 @@ const LoginPage = () => {
       <AuthButton>登入</AuthButton>
       <AuthLinkText>註冊</AuthLinkText>
     </AuthContainer>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

@@ -2,10 +2,10 @@ import {
   AuthContainer,
   AuthInputContainer,
   AuthButton,
-  AuthLinkText,
-} from 'components/common/auth.styled';
-import { ACLogoIcon } from 'assets/images';
-import { AuthInput } from 'components';
+  AuthLinkText
+} from 'components/common/auth.styled'
+import { ACLogoIcon } from 'assets/images'
+import { AuthInput } from 'components'
 
 const SignUpPage = () => {
   return (
@@ -29,7 +29,7 @@ const SignUpPage = () => {
       <AuthButton>註冊</AuthButton>
       <AuthLinkText>取消</AuthLinkText>
     </AuthContainer>
-  );
-};
+  )
+}
 
-export default SignUpPage;
+export default SignUpPage

@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import styled from 'styled-components';
+import clsx from 'clsx'
+import styled from 'styled-components'
 
 const StyledAddTodoContainer = styled.div`
   min-height: 52px;
@@ -26,7 +26,7 @@ const StyledLabelIcon = styled.label`
   &:after {
     content: '+';
   }
-`;
+`
 
 const StyledInputContainer = styled.div`
   min-height: 52px;
@@ -52,7 +52,7 @@ const StyledInputContainer = styled.div`
       color: var(--gray);
     }
   }
-`;
+`
 
 const StyledAddTodoActionContainer = styled.div`
   button {
@@ -67,27 +67,29 @@ const StyledAddTodoActionContainer = styled.div`
       display: block;
     }
   }
-`;
+`
 const TodoInput = (props) => {
   // 讓使用者輸入資料，並監聽輸入欄位資料，onAddToDo (上傳todo資料儲存)
   // onChange = 上面傳的setInputValue
-  const {inputValue,onChange,onKeyPress,onAddTodo} = props 
-  
+  const { inputValue, onChange, onKeyPress, onAddTodo } = props
+
   return (
-    <StyledAddTodoContainer className={clsx('',{active:inputValue.length>0})}>
-      <StyledLabelIcon className="icon" htmlFor="add-todo-input" />
+    <StyledAddTodoContainer className={clsx('', { active: inputValue.length > 0 })}>
+      <StyledLabelIcon className='icon' htmlFor='add-todo-input' />
       <StyledInputContainer>
-        <input id="add-todo-input" type="text" placeholder="新增工作" value={inputValue} onChange={(event) => {onChange?.(event.target.value)}} onKeyDown={(event)=> { 
-          if (event.key === 'Enter') {
-            onKeyPress?.()
-          }  
-        }}/>
+        <input
+          id='add-todo-input' type='text' placeholder='新增工作' value={inputValue} onChange={(event) => { onChange?.(event.target.value) }} onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              onKeyPress?.()
+            }
+          }}
+        />
       </StyledInputContainer>
-      <StyledAddTodoActionContainer className={ clsx ('',{active:inputValue.length>0})}>
-        <button className="btn-reset" onClick={() => onAddTodo?.()}>新增</button>
+      <StyledAddTodoActionContainer className={clsx('', { active: inputValue.length > 0 })}>
+        <button className='btn-reset' onClick={() => onAddTodo?.()}>新增</button>
       </StyledAddTodoActionContainer>
     </StyledAddTodoContainer>
-  );
-};
+  )
+}
 
-export default TodoInput;
+export default TodoInput

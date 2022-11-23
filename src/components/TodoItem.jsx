@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import clsx from 'clsx'; // 引入className變換套件
-import {useRef} from 'react'
+import styled from 'styled-components'
+import clsx from 'clsx' // 引入className變換套件
+import { useRef } from 'react'
 import {
   CheckActiveIcon,
   CheckCircleIcon,
-  CheckHoverIcon,
-} from 'assets/images';
+  CheckHoverIcon
+} from 'assets/images'
 
 const StyledTaskItem = styled.div`
   min-height: 52px;
@@ -100,36 +100,35 @@ const StyledTaskItem = styled.div`
       background-image: url(${CheckHoverIcon});
     }
   }
-`;
+`
 
 const TodoItem = (props) => {
-  const {todo,onToggleDone,onSave,onDelete,onChangeMode} = props
+  const { todo, onToggleDone, onSave, onDelete, onChangeMode } = props
   // 設定 ref 捕捉編輯時DOM元素value
   const editInputRef = useRef(null)
   // 編輯中按下Enter/Esc
-  function handleKeyDown (event,todoId) {
+  function handleKeyDown (event, todoId) {
     // 按到Enter時
     if (editInputRef.current.value.length > 0 &&　event.key === 'Enter') {
-      onSave?.({id:todoId,title: editInputRef.current.value,})
-    }
-    else if (event.key === 'Escape') {
-      onChangeMode?.({id:todoId,isEdit:false})
+      onSave?.({ id: todoId, title: editInputRef.current.value })
+    } else if (event.key === 'Escape') {
+      onChangeMode?.({ id: todoId, isEdit: false })
     }
   }
   return (
-    <StyledTaskItem className={clsx('',{done: todo.isDone,edit:todo.isEdit})}>
-      <div className="task-item-checked">
-        <span className="icon icon-checked" onClick={()=>{onToggleDone?.(todo.id)}}/>
+    <StyledTaskItem className={clsx('', { done: todo.isDone, edit: todo.isEdit })}>
+      <div className='task-item-checked'>
+        <span className='icon icon-checked' onClick={() => { onToggleDone?.(todo.id) }} />
       </div>
-      <div className="task-item-body" onDoubleClick={()=>{onChangeMode?.({id:todo.id, isEdit: true})}}>
-        <span className="task-item-body-text">{todo.title}</span>
-        <input className="task-item-body-input" defaultValue={todo.title} ref={editInputRef} onKeyDown={(event)=>{handleKeyDown?.(event,todo.id)}}/>
+      <div className='task-item-body' onDoubleClick={() => { onChangeMode?.({ id: todo.id, isEdit: true }) }}>
+        <span className='task-item-body-text'>{todo.title}</span>
+        <input className='task-item-body-input' defaultValue={todo.title} ref={editInputRef} onKeyDown={(event) => { handleKeyDown?.(event, todo.id) }} />
       </div>
-      <div className="task-item-action ">
-        <button className="btn-reset btn-destroy icon" onClick={()=>onDelete?.(todo.id)}></button>
+      <div className='task-item-action '>
+        <button className='btn-reset btn-destroy icon' onClick={() => onDelete?.(todo.id)} />
       </div>
     </StyledTaskItem>
-  );
-};
+  )
+}
 
-export default TodoItem;
+export default TodoItem

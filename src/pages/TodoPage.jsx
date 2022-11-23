@@ -1,32 +1,32 @@
-import { Footer, Header, TodoCollection, TodoInput } from 'components';
-import { useState } from 'react';
+import { Footer, Header, TodoCollection, TodoInput } from 'components'
+import { useState } from 'react'
 
 const dummyTodos = [
   {
     title: 'Learn react-router',
     isDone: true,
-    id: 1,
+    id: 1
   },
   {
     title: 'Learn to create custom hooks',
     isDone: false,
-    id: 2,
+    id: 2
   },
   {
     title: 'Learn to use context',
     isDone: true,
-    id: 3,
+    id: 3
   },
   {
     title: 'Learn to implement auth',
     isDone: false,
-    id: 4,
-  },
-];
+    id: 4
+  }
+]
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('')
-  const [todos, setTodos] = useState(dummyTodos) 
+  const [todos, setTodos] = useState(dummyTodos)
   // input onChange handler
   function handleInput (value) {
     setInputValue(value)
@@ -35,14 +35,14 @@ const TodoPage = () => {
   function handleAddTodo () {
     // inputValue 長度=0 直接return
     if (!inputValue.length) {
-      return 
+      return
     }
     // 如果有輸入內容，更新至todos，注意id不和原本1~4重複
-    setTodos( preTodos => {
+    setTodos(preTodos => {
       return [
         ...preTodos,
         {
-          id: Math.random()*100 + (inputValue.length + 1), 
+          id: Math.random() * 100 + (inputValue.length + 1),
           title: inputValue,
           isDone: false
         }
@@ -51,17 +51,17 @@ const TodoPage = () => {
     // 清空原本 inputValue 輸入值
     setInputValue('')
   }
-   function handleKeyDown () {
-     // inputValue 長度=0 直接return
+  function handleKeyDown () {
+    // inputValue 長度=0 直接return
     if (!inputValue.length) {
-      return 
+      return
     }
     // 如果有輸入內容，更新至todos，注意id不和原本1~4重複
-    setTodos( preTodos => {
+    setTodos(preTodos => {
       return [
         ...preTodos,
         {
-          id: Math.random()*100 + (inputValue.length + 1), 
+          id: Math.random() * 100 + (inputValue.length + 1),
           title: inputValue,
           isDone: false
         }
@@ -69,72 +69,70 @@ const TodoPage = () => {
     })
     // 清空原本 inputValue 輸入值
     setInputValue('')
-   }
-   // toggle更動todo完成/未完成
-   function handleToggleDone (todoId) {
+  }
+  // toggle更動todo完成/未完成
+  function handleToggleDone (todoId) {
     // 找到該筆todo id 並更新isDone屬性資料
-    setTodos(todos.map ( todo => {
+    setTodos(todos.map(todo => {
       if (todo.id === todoId) {
         return {
           ...todo,
-          isDone: !todo.isDone,
+          isDone: !todo.isDone
         }
       }
       return todo
     }))
-   }
-   // handleChangeMode function {id,isEdit} 解構傳入的參數
-   function handleChangeMode ({id,isEdit}) {
+  }
+  // handleChangeMode function {id,isEdit} 解構傳入的參數
+  function handleChangeMode ({ id, isEdit }) {
     // 呼叫setTodos 更新該筆Todo isEdit屬性
     setTodos((preTodos) => {
-      return preTodos.map (todo => {
+      return preTodos.map(todo => {
         if (todo.id === id) {
           return {
             ...todo,
             isEdit
           }
-        }
-        else {
+        } else {
           return {
             ...todo,
-            isEdit: false,
+            isEdit: false
           }
         }
-      } )
+      })
     })
-   }
-   // 編輯完Save
-   function handleSave ({id,title}) {
-    setTodos ((preTodos)=> {
-      return preTodos.map (todo=> {
-        if (todo.id ===id) {
+  }
+  // 編輯完Save
+  function handleSave ({ id, title }) {
+    setTodos((preTodos) => {
+      return preTodos.map(todo => {
+        if (todo.id === id) {
           return {
             ...todo,
             title,
-            isEdit: false,
+            isEdit: false
           }
-        }
-        else {
+        } else {
           return todo
         }
       })
     })
-   }
-   // handleDelete刪除功能 
-   function handleDelete (todoId) {
+  }
+  // handleDelete刪除功能
+  function handleDelete (todoId) {
     // 從todos刪掉該筆todoItem資料
-    setTodos (preTodos => preTodos.filter( todo => todo.id!==todoId) )
-   }
+    setTodos(preTodos => preTodos.filter(todo => todo.id !== todoId))
+  }
 
   return (
     <div>
       TodoPage
       <Header />
-      <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
-      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave} onDelete={handleDelete}/>
-      <Footer todosLength={todos.length}/>
+      <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown} />
+      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave} onDelete={handleDelete} />
+      <Footer todosLength={todos.length} />
     </div>
-  );
-};
+  )
+}
 
-export default TodoPage;
+export default TodoPage

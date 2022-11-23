@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyedContainer = styled.div`
   display: flex;
@@ -7,12 +7,12 @@ const StyedContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-`;
+`
 
 const StyledAuthInputContainer = styled.div`
   width: 50%;
   margin-top: 30px;
-`;
+`
 
 const StyledButton = styled.button`
   border-radius: 30px;
@@ -29,17 +29,17 @@ const StyledButton = styled.button`
   &.hover {
     cursor: pointer;
   }
-`;
+`
 
 const StyledLinkText = styled.div`
   color: #0062ff;
   font-size: 16px;
   font-weight: 400;
-`;
+`
 
 export {
   StyedContainer as AuthContainer,
   StyledAuthInputContainer as AuthInputContainer,
   StyledButton as AuthButton,
-  StyledLinkText as AuthLinkText,
-};
+  StyledLinkText as AuthLinkText
+}
