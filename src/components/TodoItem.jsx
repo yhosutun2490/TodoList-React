@@ -111,7 +111,7 @@ const TodoItem = (props) => {
   // 編輯中按下Enter/Esc
   function handleKeyDown (event,todoId) {
     // 按到Enter時
-    if (event.key === 'Enter') {
+    if (editInputRef.current.value.length > 0 &&　event.key === 'Enter') {
       onSave?.({id:todoId,title: editInputRef.current.value,})
     }
     else if (event.key === 'Escape') {

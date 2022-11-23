@@ -125,9 +125,7 @@ const TodoPage = () => {
    // handleDelete刪除功能 
    function handleDelete (todoId) {
     // 從todos刪掉該筆todoItem資料
-    setTodos (preTodos => {
-      return preTodos.map( todo => todo.id!==todoId)
-    } )
+    setTodos (preTodos => preTodos.filter( todo => todo.id!==todoId) )
    }
 
   return (
