@@ -122,13 +122,20 @@ const TodoPage = () => {
       })
     })
    }
+   // handleDelete刪除功能 
+   function handleDelete (todoId) {
+    // 從todos刪掉該筆todoItem資料
+    setTodos (preTodos => {
+      return preTodos.map( todo => todo.id!==todoId)
+    } )
+   }
 
   return (
     <div>
       TodoPage
       <Header />
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown}/>
-      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave}/>
+      <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave} onDelete={handleDelete}/>
       <Footer />
     </div>
   );
