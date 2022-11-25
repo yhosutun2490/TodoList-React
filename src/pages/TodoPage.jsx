@@ -1,5 +1,6 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components'
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
+import { getTodos , createTodo } from 'api/todo';
 
 const dummyTodos = [
   {
@@ -32,43 +33,57 @@ const TodoPage = () => {
     setInputValue(value)
   }
   // addTodo handler
-  function handleAddTodo () {
+  async function  handleAddTodo () {
     // inputValue 長度=0 直接return
     if (!inputValue.length) {
       return
     }
-    // 如果有輸入內容，更新至todos，注意id不和原本1~4重複
-    setTodos(preTodos => {
+    // 新增Todo資料到後端資料庫，並拉回新資料更新狀態
+    try {
+      const data = await createTodo({
+      title: inputValue,
+      isDone: false
+    })
+     setTodos(preTodos => {
       return [
         ...preTodos,
         {
-          id: Math.random() * 100 + (inputValue.length + 1),
-          title: inputValue,
-          isDone: false
+          id: data.id,
+          title: data.title,
+          isDone: data.isDone,
+          isEdit: false
         }
       ]
     })
     // 清空原本 inputValue 輸入值
     setInputValue('')
+    } catch(error) {console.error(error)} 
   }
-  function handleKeyDown () {
-    // inputValue 長度=0 直接return
+  async function handleKeyDown () {
+     // inputValue 長度=0 直接return
     if (!inputValue.length) {
       return
     }
-    // 如果有輸入內容，更新至todos，注意id不和原本1~4重複
-    setTodos(preTodos => {
+    // 新增Todo資料到後端資料庫，並拉回新資料更新狀態
+    try {
+      const data = await createTodo({
+      title: inputValue,
+      isDone: false
+    })
+     setTodos(preTodos => {
       return [
         ...preTodos,
         {
-          id: Math.random() * 100 + (inputValue.length + 1),
-          title: inputValue,
-          isDone: false
+          id: data.id,
+          title: data.title,
+          isDone: data.isDone,
+          isEdit: false
         }
       ]
     })
     // 清空原本 inputValue 輸入值
     setInputValue('')
+    } catch(error) {console.error(error)} 
   }
   // toggle更動todo完成/未完成
   function handleToggleDone (todoId) {
@@ -123,6 +138,16 @@ const TodoPage = () => {
     // 從todos刪掉該筆todoItem資料
     setTodos(preTodos => preTodos.filter(todo => todo.id !== todoId))
   }
+
+  // 由API獲取所有Todos資料
+  useEffect (() => {
+    const getTodosAsync = async ()=> {
+      try {
+        const todos = await getTodos // 等待資料回傳後渲染
+        setTodos(todos.map((todo) => ({...todo, isEdit: false})))
+      } catch (error) {console.error(error)}
+    }
+  },[])
 
   return (
     <div>
