@@ -1,33 +1,31 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components'
 import { useState , useEffect } from 'react'
-import { getTodos , createTodo } from 'api/todo';
-
-const dummyTodos = [
-  {
-    title: 'Learn react-router',
-    isDone: true,
-    id: 1
-  },
-  {
-    title: 'Learn to create custom hooks',
-    isDone: false,
-    id: 2
-  },
-  {
-    title: 'Learn to use context',
-    isDone: true,
-    id: 3
-  },
-  {
-    title: 'Learn to implement auth',
-    isDone: false,
-    id: 4
-  }
-]
-
+import { getTodos , createTodo ,patchTodo ,deleteTodo } from 'api/todo';
+const dummyTools = [
+    {
+      "title": "Learn react-router",
+      "isDone": true,
+      "id": 1
+    },
+    {
+      "title": "Learn to create custom hooks",
+      "isDone": false,
+      "id": 2
+    },
+    {
+      "title": "Learn to use context",
+      "isDone": true,
+      "id": 3
+    },
+    {
+      "title": "Learn to implement auth",
+      "isDone": false,
+      "id": 4
+    }
+  ]
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('')
-  const [todos, setTodos] = useState(dummyTodos)
+  const [todos, setTodos] = useState(dummyTools)
   // input onChange handler
   function handleInput (value) {
     setInputValue(value)
@@ -86,9 +84,13 @@ const TodoPage = () => {
     } catch(error) {console.error(error)} 
   }
   // toggle更動todo完成/未完成
-  function handleToggleDone (todoId) {
-    // 找到該筆todo id 並更新isDone屬性資料
-    setTodos(todos.map(todo => {
+  async function handleToggleDone (todoId) {
+    // 利用id找到該筆todo
+    const targetTodo = todos.find( todo => todo.id === todoId)
+    // 先更新資料庫，再更新本地端狀態
+    try {
+      await patchTodo({todoId,isDone: !targetTodo.isDone})
+      setTodos(todos.map(todo => {
       if (todo.id === todoId) {
         return {
           ...todo,
@@ -97,6 +99,10 @@ const TodoPage = () => {
       }
       return todo
     }))
+    } catch (error) {
+       console.error('onChangeToggle error',error);
+    }
+ 
   }
   // handleChangeMode function {id,isEdit} 解構傳入的參數
   function handleChangeMode ({ id, isEdit }) {
@@ -117,9 +123,12 @@ const TodoPage = () => {
       })
     })
   }
-  // 編輯完Save
-  function handleSave ({ id, title }) {
-    setTodos((preTodos) => {
+  // 編輯完Save，更改後端todo isDone資料存入就行
+  async function handleSave ({ id, title }) {
+    try {
+      await patchTodo({ id, title }) // 資料端執行
+      // 本地端執行
+       setTodos((preTodos) => {
       return preTodos.map(todo => {
         if (todo.id === id) {
           return {
@@ -132,21 +141,32 @@ const TodoPage = () => {
         }
       })
     })
+    } catch(error) {
+       console.error('onSave handler error',error);
+    }
+   
   }
   // handleDelete刪除功能
-  function handleDelete (todoId) {
-    // 從todos刪掉該筆todoItem資料
+  async function handleDelete (todoId) {
+    try {
+      await deleteTodo(todoId)
+      // 從todos刪掉該筆todoItem資料
     setTodos(preTodos => preTodos.filter(todo => todo.id !== todoId))
+    } catch(error) {
+      console.error('handleDelte error',error)
+    }
   }
 
   // 由API獲取所有Todos資料
   useEffect (() => {
+    // 定義初始資料fetch api
     const getTodosAsync = async ()=> {
       try {
-        const todos = await getTodos // 等待資料回傳後渲染
-        setTodos(todos.map((todo) => ({...todo, isEdit: false})))
-      } catch (error) {console.error(error)}
+        const apiTodos = await getTodos() // 等待資料回傳後渲染
+        setTodos(apiTodos.map((todo) => ({...todo, isEdit: false})))
+      } catch (error) {console.error('initialize todo error',error)}
     }
+     getTodosAsync(); 
   },[])
 
   return (
