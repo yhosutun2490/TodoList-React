@@ -22,11 +22,12 @@ const StyledInput = styled.input`
   border-radius: 0px;
 `
 
-const AuthInput = () => {
+const AuthInput = (props) => {
+  const {type, label,value , placeholder ,onChange} = props
   return (
     <StyledContainer>
-      <StyledLabel>label</StyledLabel>
-      <StyledInput type='text' placeholder='placeholder' />
+      <StyledLabel>{label}</StyledLabel>
+      <StyledInput type={type || 'text'} placeholder={placeholder} value={value} onChange={(event) => {onChange?.(event.target.value)}} />
     </StyledContainer>
   )
 }
