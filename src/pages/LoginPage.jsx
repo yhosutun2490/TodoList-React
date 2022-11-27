@@ -9,11 +9,13 @@ import { AuthInput } from 'components'
 import { useState } from 'react'
 import { login } from 'api/auth'
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom' //轉址功能
 
 const LoginPage = () => {
   // login page資料狀態
   const [username, setName] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate();
   
   async function handleClick () {
     // 登入輸入框有一個沒填不做事
@@ -33,9 +35,12 @@ const LoginPage = () => {
         showCloseButton: false,
         showConfirmButton: false,
       })
+      // 成功後轉向todo頁面
+      navigate('/todo')
+      return 
     }
     // 登入失敗跳窗
-    Swal.fire({
+      Swal.fire({
         title: '登入失敗!',
         icon: 'error',
         timer: 2500,
@@ -43,8 +48,6 @@ const LoginPage = () => {
         showCloseButton: false,
         showConfirmButton: false,
       })
-
-
   }
   return (
     <AuthContainer>
