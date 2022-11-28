@@ -7,9 +7,10 @@ import {
 import { ACLogoIcon } from 'assets/images'
 import { AuthInput } from 'components'
 import { useState } from 'react'
-import { login } from 'api/auth'
+import { checkPermission, login } from 'api/auth'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom' //轉址功能
+import { useEffect } from 'react'
 
 const LoginPage = () => {
   // login page資料狀態
@@ -49,6 +50,22 @@ const LoginPage = () => {
         showConfirmButton: false,
       })
   }
+  // 如果畫面重整或換頁，使用者登入狀態保持，利用localStorage token驗證
+  useEffect ( ()=> {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('authToken')
+      if (!authToken) {
+        return 
+      }
+      // 如果還有token 向後端確認時效性
+      const result = await checkPermission(authToken)
+      if (result.data.success === true) {
+        navigate('/todo')
+      }
+    }
+    checkTokenIsValid()
+  },[navigate])
+
   return (
     <AuthContainer>
       <div>

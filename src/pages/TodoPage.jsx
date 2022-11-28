@@ -1,6 +1,8 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components'
 import { useState , useEffect } from 'react'
 import { getTodos , createTodo ,patchTodo ,deleteTodo } from 'api/todo';
+import { checkPermission } from 'api/auth'
+import { useNavigate } from 'react-router-dom';
 const dummyTools = [
     {
       "title": "Learn react-router",
@@ -26,6 +28,7 @@ const dummyTools = [
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [todos, setTodos] = useState(dummyTools)
+  const navigate =  useNavigate()
   // input onChange handler
   function handleInput (value) {
     setInputValue(value)
@@ -168,6 +171,22 @@ const TodoPage = () => {
     }
      getTodosAsync(); 
   },[])
+  // 換頁後驗證功能
+   useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        navigate('/login');
+      }
+      const result = await checkPermission(authToken);
+      // 如果token時效過了
+      if (!result) {
+        navigate('/login');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate]);
 
   return (
     <div>

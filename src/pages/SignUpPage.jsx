@@ -8,14 +8,17 @@ import { ACLogoIcon } from 'assets/images'
 import { AuthInput } from 'components'
 import { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { register } from 'api/auth'
+import { register , checkPermission } from 'api/auth'
 import Swal from 'sweetalert2'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SignUpPage = () => {
   // 帳號、密碼、email
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   async function handleClick() {
     // 如果輸入框有其中一個為空值不做事
@@ -51,6 +54,20 @@ const SignUpPage = () => {
       showCancelButton: false
     });
   }
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        return;
+      }
+      const result = await checkPermission(authToken);
+      if (result) {
+        navigate('/todo');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate]);
   return (
     <AuthContainer>
       <div>
