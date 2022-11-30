@@ -29,7 +29,7 @@ const TodoPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [todos, setTodos] = useState(dummyTools)
   const navigate =  useNavigate()
-  const {isAuthenticated } = useAuth()
+  const {isAuthenticated,currentMember } = useAuth()
   // input onChange handler
   function handleInput (value) {
     setInputValue(value)
@@ -175,6 +175,8 @@ const TodoPage = () => {
     }
      getTodosAsync(); 
   },[])
+
+
   // 換頁後驗證功能
    useEffect(() => {
       // 如果token驗證狀態沒過
@@ -186,7 +188,7 @@ const TodoPage = () => {
   return (
     <div>
       TodoPage
-      <Header />
+      <Header username={currentMember?.name}/>
       <TodoInput inputValue={inputValue} onChange={handleInput} onAddTodo={handleAddTodo} onKeyPress={handleKeyDown} />
       <TodoCollection todos={todos} onToggleDone={handleToggleDone} onChangeMode={handleChangeMode} onSave={handleSave} onDelete={handleDelete} />
       <Footer todosLength={todos.length} />

@@ -7,7 +7,6 @@ import {
 import { ACLogoIcon } from 'assets/images'
 import { AuthInput } from 'components'
 import { useState } from 'react'
-import { checkPermission } from 'api/auth'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom' //轉址功能
 import { useEffect } from 'react'

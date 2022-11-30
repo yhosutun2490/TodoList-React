@@ -23,12 +23,12 @@ const StyledGreetingText = styled.div`
 
 const Header = (props) => {
   // Header 元件props
-  const { userName } = props
+  const { username } = props
   return (
     <StyledHeader>
       <h3>Tasks</h3>
       <StyledGreetingText>
-        Hi <span>{userName}</span>
+        Hi <span>{username}</span>
       </StyledGreetingText>
     </StyledHeader>
   )
