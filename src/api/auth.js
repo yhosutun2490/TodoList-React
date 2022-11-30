@@ -48,5 +48,6 @@ export const checkPermission = async (authToken) => {
     return response.data.success
   } catch(error) {
      console.error('[Check Permission Failed]:', error);
+     // return something here....
   }
 } 

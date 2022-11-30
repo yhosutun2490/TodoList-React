@@ -8,10 +8,10 @@ import { ACLogoIcon } from 'assets/images'
 import { AuthInput } from 'components'
 import { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { register , checkPermission } from 'api/auth'
 import Swal from 'sweetalert2'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 const SignUpPage = () => {
   // 帳號、密碼、email
@@ -19,13 +19,14 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { isAuthenticated ,register} = useAuth()
 
   async function handleClick() {
     // 如果輸入框有其中一個為空值不做事
     if (userName.length ===0 || email.length===0 || password.length===0) {
       return
     }
-    const {success, authToken} = await register (
+    const success = await register (
       {
         username:userName,
         email:email,
@@ -33,7 +34,6 @@ const SignUpPage = () => {
       }
     ) 
     if (success) {
-        localStorage.setItem('authToken', authToken);
         // 成功註冊跳出視窗
         Swal.fire({
           position: 'top',
@@ -45,7 +45,7 @@ const SignUpPage = () => {
           })
           return 
     }
-        Swal.fire({
+    Swal.fire({
       position: 'top',
       title: '註冊失敗！ 可能帳密已經被註冊或格式錯誤',
       timer: 2500,
@@ -55,19 +55,11 @@ const SignUpPage = () => {
     });
   }
   useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
+      if (isAuthenticated) {
         navigate('/todo');
       }
-    };
-
-    checkTokenIsValid();
-  }, [navigate]);
+    }, [navigate,isAuthenticated]
+    );
   return (
     <AuthContainer>
       <div>

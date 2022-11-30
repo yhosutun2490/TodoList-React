@@ -1,8 +1,8 @@
 import { Footer, Header, TodoCollection, TodoInput } from 'components'
 import { useState , useEffect } from 'react'
-import { getTodos , createTodo ,patchTodo ,deleteTodo } from 'api/todo';
-import { checkPermission } from 'api/auth'
+import { getTodos , createTodo ,patchTodo ,deleteTodo } from 'api/todo'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'contexts/AuthContext';
 const dummyTools = [
     {
       "title": "Learn react-router",
@@ -29,6 +29,7 @@ const TodoPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [todos, setTodos] = useState(dummyTools)
   const navigate =  useNavigate()
+  const {isAuthenticated } = useAuth()
   // input onChange handler
   function handleInput (value) {
     setInputValue(value)
@@ -87,14 +88,17 @@ const TodoPage = () => {
     } catch(error) {console.error(error)} 
   }
   // toggle更動todo完成/未完成
-  async function handleToggleDone (todoId) {
+  async function handleToggleDone (id) {
     // 利用id找到該筆todo
-    const targetTodo = todos.find( todo => todo.id === todoId)
+    const targetTodo = todos.find( todo => todo.id === id)
     // 先更新資料庫，再更新本地端狀態
     try {
-      await patchTodo({todoId,isDone: !targetTodo.isDone})
+      await patchTodo({
+        id,
+        isDone: !targetTodo.isDone,
+      })
       setTodos(todos.map(todo => {
-      if (todo.id === todoId) {
+      if (todo.id === id) {
         return {
           ...todo,
           isDone: !todo.isDone
@@ -173,20 +177,11 @@ const TodoPage = () => {
   },[])
   // 換頁後驗證功能
    useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
+      // 如果token驗證狀態沒過
+      if (!isAuthenticated) {
         navigate('/login');
       }
-      const result = await checkPermission(authToken);
-      // 如果token時效過了
-      if (!result) {
-        navigate('/login');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate]);
+    }, [navigate,isAuthenticated]);
 
   return (
     <div>
