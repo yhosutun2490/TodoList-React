@@ -70,7 +70,7 @@ const TodoPage = () => {
     try {
       const data = await createTodo({
       title: inputValue,
-      isDone: false
+      isDone: false,
     })
      setTodos(preTodos => {
       return [
@@ -170,7 +170,7 @@ const TodoPage = () => {
     const getTodosAsync = async ()=> {
       try {
         const apiTodos = await getTodos() // 等待資料回傳後渲染
-        setTodos(apiTodos.map((todo) => ({...todo, isEdit: false})))
+        setTodos(apiTodos?.map((todo) => ({...todo, isEdit: false})))
       } catch (error) {console.error('initialize todo error',error)}
     }
      getTodosAsync(); 

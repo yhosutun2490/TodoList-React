@@ -26,7 +26,6 @@ export const register = async ({username,email,password}) => {
       email,
       password
     })
-    console.log(data)
     const {authToken} = data
     // 如果註冊成功，會回傳token
     if (authToken) {
