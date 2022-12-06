@@ -31,12 +31,10 @@ export const getTodos = async () => {
 export const createTodo = async (payload) => {
   const {title,isDone} = payload
   try {
-    console.log(payload) // 有吃到前端資料
     const res = await axiosInstance.post(`${baseUrl}/todos`, 
     { title,
       isDone
-    });
-  console.log(res.data)
+    })
   return res.data
   } catch (error) {
     console.error('[Create Todo failed]: ', error);

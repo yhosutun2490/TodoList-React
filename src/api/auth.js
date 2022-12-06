@@ -7,7 +7,6 @@ export const login = async ({username,password}) => {
       username,
       password
     })
-    console.log(data)
     const {authToken} = data
     // 如果後端驗證成功有回傳JWT token
     if (authToken) {
@@ -48,5 +47,6 @@ export const checkPermission = async (authToken) => {
   } catch(error) {
      console.error('[Check Permission Failed]:', error);
      // return something here....
+     return 
   }
 } 
