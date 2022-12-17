@@ -11,9 +11,10 @@ function App() {
       <HashRouter basename={basename}>
         <AuthProvider>
           <Routes>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignUpPage />} />
-            <Route path="todo" element={<TodoPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/todo" element={<TodoPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </AuthProvider>
