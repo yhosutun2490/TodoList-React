@@ -1,6 +1,6 @@
 import './App.scss';
 import { HomePage, TodoPage, LoginPage, SignUpPage } from './pages'; // 引入4個主頁面
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // react路由模組
+import { HashRouter, Routes, Route } from 'react-router-dom'; // react路由模組
 import { AuthProvider } from './contexts/AuthContext';
 // 新增 basename
 const basename = process.env.PUBLIC_URL;
@@ -8,7 +8,7 @@ const basename = process.env.PUBLIC_URL;
 function App() {
   return (
     <div className="app">
-      <BrowserRouter basename={basename}>
+      <HashRouter basename={basename}>
         <AuthProvider>
           <Routes>
             <Route path="login" element={<LoginPage />} />
@@ -17,7 +17,7 @@ function App() {
             <Route path="*" element={<HomePage />} />
           </Routes>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
